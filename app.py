@@ -16,9 +16,9 @@ strategy = "RSI 반등 + MACD 골든크로스"
 st.success(f"추천 종목: {ticker} / 전략: {strategy}")
 
 with st.spinner("차트 생성 중..."):
-    chart_path = generate_chart(ticker)
+    chart_path, error = generate_chart(ticker)
     if chart_path:
-        st.image(chart_path, caption=f"{ticker} 차트")
-        st.success("📊 차트 생성 완료!")
+    st.image(chart_path, caption=f"{ticker} 차트")
+    st.success("📊 차트 생성 완료!")
     else:
-        st.error("❌ 차트 생성 실패! 데이터가 부족하거나 형식 오류가 있습니다.")
+    st.error(error)
