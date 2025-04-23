@@ -1,28 +1,22 @@
 import streamlit as st
-from strategy_checker import get_recommended_stocks
-from sheet_manager import record_recommendation, check_exit_conditions
-from email_notifier import send_email_notification
+from sheet_manager import record_recommendation
+from email_notifier import send_email
+from chart_generator import generate_chart
+from pdf_report import create_pdf_report
+from drive_uploader import upload_to_drive
 
 st.set_page_config(page_title="SmartSwing Tracker", layout="wide")
 st.title("📈 SmartSwing Tracker")
-st.markdown("자동화된 미국 주식 추천 및 전략 기반 트래킹 시스템입니다.")
-st.markdown("---")
 
-if st.button("📊 조건 만족 종목 스캔"):
-    st.info("조건을 확인 중입니다...")
-    stocks = get_recommended_stocks()
-    if not stocks:
-        st.warning("조건에 맞는 종목이 없습니다.")
-    else:
-        for stock in stocks:
-            st.success(f"✅ 추천 종목: {stock['ticker']} / 전략: {stock['strategy']}")
-            record_recommendation(stock)
-            send_email_notification(stock['ticker'], stock['strategy'])
+with st.spinner("🔍 조건 스캔 중..."):
+    ticker = "NVDA"
+    strategy = "RSI 반등 + MACD 골든크로스"
 
-if st.button("🧾 수익률 조건 체크 및 알림"):
-    results = check_exit_conditions()
-    if results:
-        for res in results:
-            st.info(f"📬 알림 전송됨: {res}")
-    else:
-        st.success("조건에 해당하는 종목이 없습니다.")
+    st.success(f"✅ 추천 종목: {ticker} / 전략: {strategy}")
+    record_recommendation(ticker, strategy)
+    send_email(ticker, strategy)
+    chart_path = generate_chart(ticker)
+    st.image(chart_path)
+    pdf_path = create_pdf_report(ticker, strategy, chart_path)
+    upload_to_drive(pdf_path)
+    st.success("📄 PDF 리포트가 Google Drive에 저장되었습니다.")

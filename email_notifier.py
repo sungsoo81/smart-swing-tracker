@@ -1,2 +1,2 @@
-def send_email_notification(ticker, strategy):
-    print(f"📧 이메일 전송됨: {ticker} ({strategy})")
+def send_email(ticker, strategy):
+    print(f"[Email] {ticker} 전략 {strategy} 이메일 전송됨")

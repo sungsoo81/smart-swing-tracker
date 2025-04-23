@@ -1,6 +1,14 @@
-# SmartSwing Tracker
+# SmartSwing Tracker PRO
 
-이 앱은 미국 주식 자동 추천 시스템입니다.
-1. 전략 조건을 만족하는 종목을 자동 추천
-2. Google Sheets에 자동 기록
-3. 수익률 도달 시 이메일 알림
+## 기능 요약
+- 조건 만족 종목 자동 추천
+- Google Sheets 자동 기록
+- 이메일 알림 발송
+- 차트 생성 (RSI, MACD)
+- PDF 리포트 생성
+- Google Drive 자동 저장
+
+## 실행 방법
+1. Streamlit Cloud에 업로드
+2. credentials.json 포함
+3. app.py 실행
