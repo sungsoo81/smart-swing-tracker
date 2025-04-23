@@ -1,3 +1,8 @@
+import yfinance as yf
+import mplfinance as mpf
+import pandas as pd
+from datetime import datetime, timedelta  # ✅ 이 줄 필수
+
 def generate_chart(ticker):
     try:
         end = datetime.today()
