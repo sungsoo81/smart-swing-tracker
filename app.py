@@ -21,4 +21,4 @@ with st.spinner("차트 생성 중..."):
         st.image(chart_path, caption=f"{ticker} 차트")
         st.success("📊 차트 생성 완료!")
     else:
-    st.error(error)
+        st.error(error)  # ✅ 이 줄이 들여쓰기가 필요했던 부분
