@@ -9,11 +9,9 @@ import streamlit as st
 st.set_page_config(
     page_title="SmartSwing Tracker",
     layout="wide",
-    initial_sidebar_state="expanded"  # ← 여기 추가!
+    initial_sidebar_state="expanded"  # 사이드바 강제 열기
 )
 
-
-st.set_page_config(page_title="SmartSwing Tracker", layout="wide")
 st.title("📈 SmartSwing Tracker")
 
 with st.spinner("🔍 조건 스캔 중..."):
