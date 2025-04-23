@@ -14,11 +14,10 @@ def generate_chart(ticker):
 
     df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
 
-    # ✅ 각 컬럼에 대해 수치형으로 변환
-    for col in df.columns:
-        df[col] = pd.to_numeric(df[col], errors='coerce')
-
+    # 모든 컬럼을 숫자형으로 강제 변환
+    df = df.apply(pd.to_numeric, errors='coerce')
     df.dropna(inplace=True)
+
     df.index.name = 'Date'
 
     chart_path = f"{ticker}_chart.png"
