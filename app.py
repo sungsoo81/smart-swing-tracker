@@ -18,7 +18,7 @@ st.success(f"추천 종목: {ticker} / 전략: {strategy}")
 with st.spinner("차트 생성 중..."):
     chart_path, error = generate_chart(ticker)
     if chart_path:
-    st.image(chart_path, caption=f"{ticker} 차트")
-    st.success("📊 차트 생성 완료!")
+        st.image(chart_path, caption=f"{ticker} 차트")
+        st.success("📊 차트 생성 완료!")
     else:
     st.error(error)
