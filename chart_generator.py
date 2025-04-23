@@ -14,9 +14,8 @@ def generate_chart(ticker):
 
     df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
 
-    df.dropna(inplace=True)
-
-    for col in ['Open', 'High', 'Low', 'Close', 'Volume']:
+    # ✅ 각 컬럼에 대해 수치형으로 변환
+    for col in df.columns:
         df[col] = pd.to_numeric(df[col], errors='coerce')
 
     df.dropna(inplace=True)
