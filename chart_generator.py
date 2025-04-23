@@ -11,11 +11,17 @@ def generate_chart(ticker):
     if df.empty:
         return None
 
+    # 필요한 컬럼만 선택
     df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
 
-    # ✅ 결측치 제거 및 float 형 변환
+    # 결측치 제거
     df.dropna(inplace=True)
-    df = df.astype(float)
+
+    # 모든 열을 float 또는 int로 강제 변환
+    for col in ['Open', 'High', 'Low', 'Close', 'Volume']:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
+
+    df.dropna(inplace=True)  # 변환 후 NaN 제거
 
     df.index.name = 'Date'
 
