@@ -1,7 +1,7 @@
 import yfinance as yf
 import mplfinance as mpf
 import pandas as pd
-from datetime import datetime, timedelta  # ✅ 이 줄 필수
+from datetime import datetime, timedelta
 
 def generate_chart(ticker):
     try:
@@ -10,20 +10,22 @@ def generate_chart(ticker):
         df = yf.download(ticker, start=start, end=end)
 
         if df.empty:
-            return None, "❌ 데이터가 없습니다. 종목 코드 또는 날짜 확인 필요."
+            return None, "❌ 데이터가 없습니다."
 
+        # 필요한 컬럼만 추출
         df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
-        df = df.apply(pd.to_numeric, errors='coerce')
-        df.dropna(inplace=True)
-        df.index.name = 'Date'
 
-        df = df.astype({
-            'Open': 'float',
-            'High': 'float',
-            'Low': 'float',
-            'Close': 'float',
-            'Volume': 'float'
-        })
+        # 모든 컬럼을 수치형으로 강제 변환 + NaN 처리
+        for col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+
+        # 마지막으로 전체가 float 인지 확인하고 필터링
+        df = df.dropna()
+        for col in df.columns:
+            if not pd.api.types.is_numeric_dtype(df[col]):
+                return None, f"❌ 컬럼 {col} 데이터가 float/int 형식이 아닙니다."
+
+        df.index.name = 'Date'
 
         chart_path = f"{ticker}_chart.png"
         mpf.plot(
