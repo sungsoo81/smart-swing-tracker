@@ -12,18 +12,18 @@ def generate_chart(ticker):
         if df.empty:
             return None, "❌ 데이터가 없습니다."
 
-        # 필요한 컬럼만 추출
         df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
 
-        # 모든 컬럼을 수치형으로 강제 변환 + NaN 처리
+        # 컬럼별로 숫자형만 남기고 아닌 건 row 자체 삭제
         for col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce')
 
-        # 마지막으로 전체가 float 인지 확인하고 필터링
-        df = df.dropna()
+        df.dropna(inplace=True)
+
+        # 마지막 double-check: 모든 row가 float인지 검사
         for col in df.columns:
-            if not pd.api.types.is_numeric_dtype(df[col]):
-                return None, f"❌ 컬럼 {col} 데이터가 float/int 형식이 아닙니다."
+            if not all(isinstance(x, (int, float)) for x in df[col]):
+                return None, f"❌ {col} 컬럼에 숫자 외의 값이 존재합니다."
 
         df.index.name = 'Date'
 
