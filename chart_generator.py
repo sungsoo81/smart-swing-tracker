@@ -9,10 +9,15 @@ def generate_chart(ticker):
     df = yf.download(ticker, start=start, end=end)
 
     if df.empty:
-        return None  # 데이터 없을 경우 처리
+        return None
+
+    df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
+
+    # ✅ 결측치 제거 및 float 형 변환
+    df.dropna(inplace=True)
+    df = df.astype(float)
 
     df.index.name = 'Date'
-    df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
 
     chart_path = f"{ticker}_chart.png"
     mpf.plot(
