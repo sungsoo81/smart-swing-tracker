@@ -34,3 +34,10 @@ with st.spinner("🔍 조건 스캔 중..."):
     pdf_path = create_pdf_report(ticker, strategy, chart_path)
     upload_to_drive(pdf_path)
     st.success("📄 PDF 리포트가 Google Drive에 저장되었습니다.")
+
+chart_path = generate_chart(ticker)
+if chart_path:
+    st.image(chart_path, caption=f"{ticker} 기술 차트")
+else:
+    st.warning(f"{ticker} 차트 생성에 실패했습니다.")
+
