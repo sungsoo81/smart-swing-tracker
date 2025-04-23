@@ -1,14 +1,13 @@
-# SmartSwing Tracker PRO
+# SmartSwing Tracker
 
-## 기능 요약
-- 조건 만족 종목 자동 추천
-- Google Sheets 자동 기록
-- 이메일 알림 발송
-- 차트 생성 (RSI, MACD)
-- PDF 리포트 생성
-- Google Drive 자동 저장
+## 주요 기능
+- 종목 조건 분석
+- 캔들 차트 자동 생성
+- Streamlit Cloud에서 바로 작동 가능
+- credentials.json 업로드 가능
 
-## 실행 방법
-1. Streamlit Cloud에 업로드
-2. credentials.json 포함
-3. app.py 실행
+## 사용 방법
+1. ZIP 압축 해제 후 GitHub에 업로드
+2. Streamlit Cloud에 배포
+3. `credentials.json` 파일 업로드
+4. 종목 차트 자동 생성 확인

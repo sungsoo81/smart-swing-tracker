@@ -12,27 +12,33 @@ def generate_chart(ticker):
     if df.empty:
         return None
 
-    df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
-
-    # 완벽하게 float32로 변환 (강제 형 지정)
-    df = df.astype({
-        'Open': 'float32',
-        'High': 'float32',
-        'Low': 'float32',
-        'Close': 'float32',
-        'Volume': 'float32'
-    })
-
-    df.dropna(inplace=True)
-    df.index.name = 'Date'
+    try:
+        df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
+        df = df.apply(pd.to_numeric, errors='coerce')
+        df.dropna(inplace=True)
+        df.index.name = 'Date'
+        df = df.astype({
+            'Open': 'float',
+            'High': 'float',
+            'Low': 'float',
+            'Close': 'float',
+            'Volume': 'float'
+        })
+    except Exception as e:
+        print("데이터 전처리 에러:", e)
+        return None
 
     chart_path = f"{ticker}_chart.png"
-    mpf.plot(
-        df,
-        type='candle',
-        mav=(5, 20),
-        volume=True,
-        style='yahoo',
-        savefig=chart_path
-    )
-    return chart_path
+    try:
+        mpf.plot(
+            df,
+            type='candle',
+            mav=(5, 20),
+            volume=True,
+            style='yahoo',
+            savefig=chart_path
+        )
+        return chart_path
+    except Exception as e:
+        print("차트 생성 실패:", e)
+        return None
