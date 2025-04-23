@@ -4,6 +4,14 @@ from email_notifier import send_email
 from chart_generator import generate_chart
 from pdf_report import create_pdf_report
 from drive_uploader import upload_to_drive
+import streamlit as st
+
+st.set_page_config(
+    page_title="SmartSwing Tracker",
+    layout="wide",
+    initial_sidebar_state="expanded"  # ← 여기 추가!
+)
+
 
 st.set_page_config(page_title="SmartSwing Tracker", layout="wide")
 st.title("📈 SmartSwing Tracker")
