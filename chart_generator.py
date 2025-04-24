@@ -4,48 +4,47 @@ import pandas as pd
 from datetime import datetime, timedelta
 import logging
 
-# 로깅 설정
+# 로깅 설정 (Streamlit에서는 콘솔에서 확인 가능)
 logging.basicConfig(level=logging.INFO)
 
 def generate_chart(ticker):
     try:
-        # 날짜 범위 설정
+        # 1. 날짜 설정
         end = datetime.today()
         start = end - timedelta(days=60)
 
-        # 주가 데이터 다운로드
+        # 2. 데이터 다운로드
         df = yf.download(ticker, start=start, end=end)
 
-        # 필수 컬럼 확인
+        # 3. 필수 컬럼 유무 확인
         required_columns = ['Open', 'High', 'Low', 'Close', 'Volume']
         if df.empty or not all(col in df.columns for col in required_columns):
             logging.warning("❌ 필요한 컬럼이 누락되었습니다.")
             return None, "❌ 데이터가 없습니다: 필요한 열이 없습니다."
 
-        # 필요한 열만 추출 후 결측치 제거
-        df = df[['Open', 'High', 'Low', 'Close', 'Volume']].dropna()
+        # 4. 필수 컬럼만 추출 + 결측치 제거
+        df = df[required_columns].dropna()
 
-        # 💡 반드시 Series로 지정
+        # 5. Open 컬럼만 Series로 분리해서 디버깅
         open_series = df["Open"]
+        logging.info(f"[DEBUG] Open dtype: {open_series.dtype}")
+        logging.info(f"[DEBUG] Open values (head):\n{open_series.head()}")
+        logging.info(f"[DEBUG] Open types:\n{[type(x) for x in open_series.head()]}")
 
-        # ✅ 안전하게 로그 찍기
-        logging.info(f"[DEBUG] dtype: {open_series.dtype}")
-        logging.info(f"[DEBUG] head:\n{open_series.head()}")
-        logging.info(f"[DEBUG] 타입들:\n{[type(x) for x in open_series.head()]}"
-        # 모든 열을 float64로 변환
-        df = df.astype('float64').copy()
-        df.index.name = 'Date'
+        # 6. 전체 float64로 강제 변환 후 복사
+        df = df.astype("float64").copy()
+        df.index.name = "Date"
 
-        # 차트 파일 경로 생성
+        # 7. 차트 경로 생성
         chart_path = f"{ticker}_{datetime.now().strftime('%Y%m%d%H%M%S')}_chart.png"
 
-        # 차트 생성
+        # 8. 차트 생성
         mpf.plot(
             df,
-            type='candle',
+            type="candle",
             mav=(5, 20),
             volume=True,
-            style='yahoo',
+            style="yahoo",
             savefig=chart_path
         )
 
