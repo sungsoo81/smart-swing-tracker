@@ -1,1 +1,6 @@
+# requirements.txt 예시
+streamlit
+yfinance
+mplfinance==0.12.10b0
+pandas
 
