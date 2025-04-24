@@ -23,14 +23,15 @@ def generate_chart(ticker):
             return None, "❌ 데이터가 없습니다: 필요한 열이 없습니다."
 
         # 필요한 열만 추출 후 결측치 제거
-        df = df[required_columns].dropna()
-        
-        # 🔍 디버깅: 'Open' 컬럼 타입과 샘플 확인
-        open_series = df["Open"]
-        logging.info(f"[DEBUG] df['Open'].dtype: {open_series.dtype}")
-        logging.info(f"[DEBUG] df['Open'].head():\n{open_series.head(10)}")
-        logging.info(f"[DEBUG] 값 타입:\n{[type(x) for x in open_series.head(10)]}")
+        df = df[['Open', 'High', 'Low', 'Close', 'Volume']].dropna()
 
+        # 💡 반드시 Series로 지정
+        open_series = df["Open"]
+
+        # ✅ 안전하게 로그 찍기
+        logging.info(f"[DEBUG] dtype: {open_series.dtype}")
+        logging.info(f"[DEBUG] head:\n{open_series.head()}")
+        logging.info(f"[DEBUG] 타입들:\n{[type(x) for x in open_series.head()]}")
         # 모든 열을 float64로 변환
         df = df.astype('float64').copy()
         df.index.name = 'Date'
