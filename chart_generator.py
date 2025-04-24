@@ -22,8 +22,16 @@ def generate_chart(ticker):
             return None, "❌ 데이터가 없습니다: 필요한 열이 없습니다."
 
         # 필요한 열 선택 및 데이터 처리
-        df = df[['Open', 'High', 'Low', 'Close', 'Volume']].dropna().astype('float64')
-        df.index.name = 'Date'
+        df = df[['Open', 'High', 'Low', 'Close', 'Volume']].dropna()
+
+# ✅ 여기!
+        logging.info(f"[DEBUG] df['Open'].dtypes: {df['Open'].dtypes}")
+        logging.info(f"[DEBUG] df['Open'] head: {df['Open'].head(10)}")
+        logging.info(f"[DEBUG] 타입 확인: {[type(val) for val in df['Open'].head(10)]}")
+
+df = df.astype('float64')
+df.index.name = 'Date'
+
 
         # 차트 파일 경로 설정
         chart_path = f"{ticker}_{datetime.now().strftime('%Y%m%d%H%M%S')}_chart.png"
