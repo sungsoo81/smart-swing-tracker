@@ -24,9 +24,9 @@ def generate_chart(ticker):
 
         # 필요한 열만 추출 후 결측치 제거
         df = df[required_columns].dropna()
-        df = df[['Open', 'High', 'Low', 'Close', 'Volume']].dropna()
+        
         # 🔍 디버깅: 'Open' 컬럼 타입과 샘플 확인
-        lopen_series = df["Open"]
+        open_series = df["Open"]
         logging.info(f"[DEBUG] df['Open'].dtype: {open_series.dtype}")
         logging.info(f"[DEBUG] df['Open'].head():\n{open_series.head(10)}")
         logging.info(f"[DEBUG] 값 타입:\n{[type(x) for x in open_series.head(10)]}")
