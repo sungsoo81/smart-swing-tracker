@@ -31,7 +31,7 @@ def generate_chart(ticker):
         # ✅ 안전하게 로그 찍기
         logging.info(f"[DEBUG] dtype: {open_series.dtype}")
         logging.info(f"[DEBUG] head:\n{open_series.head()}")
-        logging.info(f"[DEBUG] 타입들:\n{[type(x) for x in open_series.head()]}")
+        logging.info(f"[DEBUG] 타입들:\n{[type(x) for x in open_series.head()]}"
         # 모든 열을 float64로 변환
         df = df.astype('float64').copy()
         df.index.name = 'Date'
