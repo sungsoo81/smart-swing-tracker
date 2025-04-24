@@ -21,8 +21,8 @@ def generate_chart(ticker):
         # 디버깅 로그 출력
         print("📋 dtypes:")
         print(df.dtypes)
-        print("📋 Sample Open values:", df["Open"].head(5).tolist())
-        print("📋 Open type example:", type(df["Open"].iloc[0]))
+        print("📋 Sample Open values:", df['Open'].head(5).tolist())
+        print("📋 Open type example:", type(df['Open'].iloc[0]))
 
         chart_path = f"{ticker}_chart.png"
         mpf.plot(
