@@ -2,7 +2,6 @@ import streamlit as st
 from chart_generator import generate_chart
 
 st.set_page_config(page_title="SmartSwing Tracker", layout="wide", initial_sidebar_state="expanded")
-
 st.title("📈 SmartSwing Tracker")
 
 uploaded_file = st.sidebar.file_uploader("📤 credentials.json 업로드", type="json")
@@ -21,4 +20,4 @@ with st.spinner("차트 생성 중..."):
         st.image(chart_path, caption=f"{ticker} 차트")
         st.success("📊 차트 생성 완료!")
     else:
-        st.error(error)  # ✅ 이 줄이 들여쓰기가 필요했던 부분
+        st.error(error)

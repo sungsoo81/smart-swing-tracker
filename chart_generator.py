@@ -13,12 +13,8 @@ def generate_chart(ticker):
             return None, "❌ 데이터가 없습니다."
 
         df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
-
-        # 모든 컬럼 숫자화 + NaN 제거
         df = df.apply(pd.to_numeric, errors='coerce')
         df.dropna(inplace=True)
-
-        # 핵심: 전체 DataFrame을 float64로 강제
         df = df.astype('float64')
         df.index.name = 'Date'
 
