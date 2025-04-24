@@ -26,9 +26,10 @@ def generate_chart(ticker):
         df = df[required_columns].dropna()
 
         # 🔍 디버깅: 'Open' 컬럼 타입과 샘플 확인
-        logging.info(f"[DEBUG] df['Open'].dtype: {df['Open'].dtype}")
-        logging.info(f"[DEBUG] df['Open'].head():\n{df['Open'].head(10)}")
-        logging.info(f"[DEBUG] 값 타입:\n{[type(x) for x in df['Open'].head(10)]}")
+        lopen_series = df["Open"]
+        logging.info(f"[DEBUG] df['Open'].dtype: {open_series.dtype}")
+        logging.info(f"[DEBUG] df['Open'].head():\n{open_series.head(10)}")
+        logging.info(f"[DEBUG] 값 타입:\n{[type(x) for x in open_series.head(10)]}")
 
         # 모든 열을 float64로 변환
         df = df.astype('float64').copy()
