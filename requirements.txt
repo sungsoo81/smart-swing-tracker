@@ -1,4 +1,4 @@
 streamlit
 yfinance
-mplfinance==0.12.10b0
+mplfinance
 pandas
