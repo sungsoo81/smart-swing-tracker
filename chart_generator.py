@@ -13,10 +13,18 @@ def generate_chart(ticker):
             return None, "❌ 데이터가 없습니다."
 
         df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
+
+        # 수치형 강제 변환
         df = df.apply(pd.to_numeric, errors='coerce')
         df.dropna(inplace=True)
-        df = df.astype('float64')
+
+        # 핵심 해결책: float64 + .copy() 로 완전 복사
+        df = df.astype('float64').copy()
         df.index.name = 'Date'
+
+        # 디버깅용 출력 (Streamlit 콘솔에)
+        print("🧪 dtypes:", df.dtypes)
+        print("🧪 head:\n", df.head())
 
         chart_path = f"{ticker}_chart.png"
         mpf.plot(
