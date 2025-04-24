@@ -22,7 +22,7 @@ def generate_chart(ticker):
 
         # ✅ 디버깅 로그 (확실한 Series 형태 사용)
         open_series = df["Open"]
-        print("📋 Sample Open values:", open_series.head(5).tolist())  # ✅ 이게 정답
+        print("📋 Sample Open values:", df["Open"].head(5).tolist())
         print("📋 Open 타입:", type(open_series))
         print("📋 값 타입:", type(open_series.iloc[0]))
 
